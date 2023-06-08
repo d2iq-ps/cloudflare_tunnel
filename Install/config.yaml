@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+data:
+  config.yaml: |
+    # Name of the tunnel
+    tunnel: example-tunnel 
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+      # The domain you mapped the tunnel to
+    - hostname: tunnel.example.com
+      # The k8s service you want to expose              
+      service: http://web-service:80
+      # This is the catchup service (Doesn't have to exist but this last line needs to be here)         
+    - service: http_status:404
